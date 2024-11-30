@@ -106,9 +106,11 @@ pub fn read_images_file(file_path: &str) -> Vec<Array1<f32>> {
     return read_images(contents);
 }
 
-pub fn get_traning_data() -> Vec<(Array1<f32>, Array1<f32>)> {
-    let images = read_images_file("data/train-images-idx3-ubyte");
-    let labels = read_labels_file("data/train-labels-idx1-ubyte");
+pub fn get_traning_data(data_path: &str) -> Vec<(Array1<f32>, Array1<f32>)> {
+    // let images = read_images_file("data/train-images-idx3-ubyte");
+    // let labels = read_labels_file("data/train-labels-idx1-ubyte");
+    let images = read_images_file(&format!("{}/train-images-idx3-ubyte", data_path));
+    let labels = read_labels_file(&format!("{}/train-labels-idx1-ubyte", data_path));
 
     let mut traning_data: Vec<(Array1<f32>, Array1<f32>)> = Vec::new();
     for i in 0..labels.len() {
@@ -123,10 +125,12 @@ pub fn get_traning_data() -> Vec<(Array1<f32>, Array1<f32>)> {
     return traning_data;
 }
 
-pub fn get_test_data() -> (Vec<Array1<f32>>, Vec<u8>) {
-    let images = read_images_file("data/t10k-images-idx3-ubyte");
-    let labels = read_labels_file("data/t10k-labels-idx1-ubyte");
-    
+pub fn get_test_data(data_path: &str) -> (Vec<Array1<f32>>, Vec<u8>) {
+    // let images = read_images_file("data/t10k-images-idx3-ubyte");
+    // let labels = read_labels_file("data/t10k-labels-idx1-ubyte");
+    let images = read_images_file(&format!("{}/t10k-images-idx3-ubyte", data_path));
+    let labels = read_labels_file(&format!("{}/t10k-labels-idx1-ubyte", data_path));
+
     return (images, labels);
 }
 
