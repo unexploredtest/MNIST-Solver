@@ -1,3 +1,6 @@
+use std::time::Instant;
+
+use ndarray_rand::rand_distr::num_traits::float;
 use rand::seq::SliceRandom;
 use rand::thread_rng;
 
@@ -58,6 +61,7 @@ impl Network {
         // let test_data = test_data.clone();
 
         for i in 0..epochs {
+            let start_time = Instant::now();
             let mut rng = thread_rng();
             training_data.shuffle(&mut rng);
 
@@ -69,8 +73,9 @@ impl Network {
                 }
                 self.update_mini_batch(&batch_train, eta);
             }
+            let elapsed_time = start_time.elapsed().as_millis() as f32 / 1_000f32;
 
-            println!("Epoch {}, {} / {}", i, self.evaluate(&test_data), n_test);
+            println!("Epoch {}, {} / {}, took {:.2} seconds", i, self.evaluate(&test_data), n_test, elapsed_time);
             
         }
     }
